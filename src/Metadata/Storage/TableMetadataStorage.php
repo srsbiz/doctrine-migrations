@@ -281,6 +281,6 @@ final class TableMetadataStorage implements MetadataStorage
                 (string) $availableMigration->getVersion(),
                 (string) $executedMigration->getVersion(),
             ) !== strlen((string) $availableMigration->getVersion()) -
-            strlen((string) $executedMigration->getVersion());
+                    strlen((string) $executedMigration->getVersion());
     }
 }
