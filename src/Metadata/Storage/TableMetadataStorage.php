@@ -276,8 +276,8 @@ final class TableMetadataStorage implements MetadataStorage
 
     private function isAlreadyV3Format(AvailableMigration $availableMigration, ExecutedMigration $executedMigration): bool
     {
-        return $availableMigration->getVersion() !== $executedMigration->getVersion()
-            && strpos(
+        return (string) $availableMigration->getVersion() === (string) $executedMigration->getVersion()
+            || strpos(
                 (string) $availableMigration->getVersion(),
                 (string) $executedMigration->getVersion(),
             ) !== strlen((string) $availableMigration->getVersion()) -
