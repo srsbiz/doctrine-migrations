@@ -30,6 +30,7 @@ use Doctrine\Migrations\Version\ExecutionResult;
 use Doctrine\Migrations\Version\Version;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\Test\TestLogger;
+use ReflectionClass;
 
 use function sprintf;
 
@@ -404,17 +405,17 @@ class TableMetadataStorageTest extends TestCase
         self::assertCount(0, $this->connection->fetchAllAssociative($sql));
     }
 
-    public function testIsAlreadyV3FormatDoesntMissTheSameVersions()
+    public function testIsAlreadyV3FormatDoesntMissTheSameVersions(): void
     {
-        $availableMigration = new AvailableMigration(
+        $availableMigration     = new AvailableMigration(
             new Version('Foo\\Version1234'),
-            $this->createMock(AbstractMigration::class)
+            $this->createMock(AbstractMigration::class),
         );
-        $executedMigrationV3 = new ExecutedMigration(new Version('Foo\\Version1234'));
+        $executedMigrationV3    = new ExecutedMigration(new Version('Foo\\Version1234'));
         $executedMigrationOlder = new ExecutedMigration(new Version('Version1234'));
 
-        $reflection = new \ReflectionClass(TableMetadataStorage::class);
-        $method = $reflection->getMethod('isAlreadyV3Format');
+        $reflection = new ReflectionClass(TableMetadataStorage::class);
+        $method     = $reflection->getMethod('isAlreadyV3Format');
         $method->setAccessible(true);
 
         self::assertTrue($method->invokeArgs($this->storage, [$availableMigration, $executedMigrationV3]));
