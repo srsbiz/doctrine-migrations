@@ -127,7 +127,7 @@ EOT)
             return 3;
         }
 
-        $fqcn = $this->getDependencyFactory()->getClassNameGenerator()->generateClassName($namespace);
+        $fqcn          = $this->getDependencyFactory()->getClassNameGenerator()->generateClassName($namespace);
         $diffGenerator = $this->getDependencyFactory()->getDiffGenerator();
 
         try {
